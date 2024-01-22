@@ -1,0 +1,22 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {{msg}}
+    <form method="post" action="{% url 'admin_register' %}">
+        {% csrf_token %}
+        <input type="text" name="admin_name" placeholder="Name">
+        <input type="text" name="admin_email" placeholder="Email">
+        <input type="tel" name="admin_phone" placeholder="Phone Number">
+        <input type="text" name="admin_address" placeholder="Address">
+        <input type="password" name="admin_password" placeholder="Password">
+        <input type="repassword" name="admin_repassword" placeholder="Re-Password">
+        <input type="submit" >
+    </form>
+    
+</body>
+</html>

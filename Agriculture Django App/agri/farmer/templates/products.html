@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+      <!-- product  section -->
+      <div class="product">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-6">
+                  <div class="titlepage">
+                     <h2>Our Product</h2>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="container-fluid">
+            <div class="row">
+               {% for product in list_of_products %}
+               <div class="col-sm-3">
+                  <div class="card text-center" style="width: 18rem;">
+                     <img src="/media/{{product.product_image}}" class="card-img-top" >
+                     <div class="card-body">
+                       <h5 class="card-title">{{product.product_name}}</h5>
+                       <p class="card-text">{{product.product_description}}</p>
+                       <p class="card-text">Price:₹{{product.product_price}}/{{product.product_unit}}</p>
+                       <a href="#" class="btn btn-primary">Add to Cart</a>
+                     </div>
+                  </div>
+               </div>
+               {% endfor %}
+            </div>
+         </div>
+      </div>
+      <br>
+      <!-- end product  section -->
+      {% endblock %}
+
+      

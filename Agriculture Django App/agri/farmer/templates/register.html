@@ -1,0 +1,22 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {{msg}}
+    <form method="post" action="{% url 'register' %}">
+        {% csrf_token %}
+        <input type="text" name="farmer_name" placeholder="Name">
+        <input type="text" name="farmer_email" placeholder="Email">
+        <input type="tel" name="farmer_phone" placeholder="Phone Number">
+        <input type="text" name="farmer_address" placeholder="Address">
+        <input type="password" name="farmer_password" placeholder="Password">
+        <input type="repassword" name="farmer_repassword" placeholder="Re-Password">
+        <input type="submit" >
+    </form>
+    
+</body>
+</html>
