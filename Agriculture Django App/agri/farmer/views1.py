@@ -34,16 +34,23 @@ def index(request):
 def register(request):
     if request.method == 'POST':
         global User_data
-        User_data = FarmerForm(data=request.POST,files=request.FILES)
-        if request.POST['farmer_password'] == request.POST['farmer_repassword']:
+        User_data = {"farmer_name" : request.POST['farmer_name'],
+                     "farmer_email" : request.POST['farmer_email'],
+                     "farmer_phone" : request.POST['farmer_phone'],
+                     "farmer_address" : request.POST['farmer_address'],
+                     "farmer_profile_pic" : request.POST['farmer_profile_pic'],
+                     "farmer_password" : request.POST['farmer_password'],
+                     "farmer_repassword" : request.POST['farmer_repassword']
+                     }
+        if User_data['farmer_password'] == User_data['farmer_repassword']:
             global otp_sent
             otp_sent = random.randint(1000,9999)
             message = f"""Hi your OTP is {otp_sent}."""	
             subject = 'BlogSpot Registration.'
             from_email = settings.EMAIL_HOST_USER
 
-            send_mail(subject, message, from_email,[request.POST['farmer_email']])
-            return render(request, 'otp.html', {'msg':'Check Your Mail For Otp','otp_sent':otp_sent}) 
+            send_mail(subject, message, from_email,[User_data['farmer_email']])
+            return render(request, 'otp.html', {'msg':'Check Your Mail For Otp',otp_sent:otp_sent}) 
         else:
             return render(request,'register.html', {'msg':'Passwords do not match!!!!!!!!'})
     else:
@@ -53,9 +60,9 @@ def otp(request):
     if request.method == 'POST':
         recieved_otp = request.POST['recieved_otp']
         if int(recieved_otp) == otp_sent:
-            if User_data.is_valid():
-                User_data.save()
-                return render(request, 'login.html', {'msg':'Your Account has been created Successfully !!!!! \n Kindly Login'})
+            farmer=Farmer.objects.create(farmer_name=User_data['farmer_name'],farmer_email=User_data['farmer_email'],farmer_phone=User_data['farmer_phone'],farmer_address=User_data['farmer_address'],farmer_profile_pic=User_data['farmer_profile_pic'],farmer_password=User_data['farmer_password'])
+
+            return render(request, 'login.html', {'msg':'Your Account has been created Successfully !!!!! \n Kindly Login'})
         else:
             return render(request, 'otp.html', {'msg':'Invalid OTP'})
     else:
@@ -95,26 +102,13 @@ def products(request):
 # Products ------------------------------
 #________________________________________________________________________________
 
-def addproduct(request):
-    return render(request, 'addproduct.html')
-
-def profile(request):
-    current_user = Farmer.objects.get(farmer_email=request.session['farmer_email'])
-    if request.method == 'POST':
-        current_user.farmer_name = request.POST['farmer_name']
-        current_user.farmer_phone = request.POST['farmer_phone']
-        current_user.farmer_address = request.POST['farmer_address']
-        current_user.farmer_profile_pic = "profile_pics/"+request.POST['farmer_profile_pic']
-        current_user.save()
-        return render(request, 'profile.html',{'current_user':current_user,'msg':'Profile Updated Successfully'})
-
-    else:
-        return render(request, 'profile.html',{'current_user':current_user})
 
 
 def about(request):
     return render(request, 'about.html')
 
+def blog(request):
+    return render(request, 'blog.html')
 
 
 def admin_login(request):

@@ -8,7 +8,7 @@ class Farmer(models.Model):
     farmer_phone = models.CharField(max_length=200)
     farmer_address = models.CharField(max_length=2000)
     farmer_password = models.CharField(max_length=200)
-    farmer_profile_pic = models.ImageField(upload_to='profile_pics/',blank=True,default='profile_pics/default.jpeg')
+    farmer_profile_pic = models.FileField(upload_to='profile_pics/',blank=True,default='profile_pics/default.jpg')
     def __str__(self):
         return self.farmer_name
     

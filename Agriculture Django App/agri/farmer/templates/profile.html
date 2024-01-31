@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+ 
+<style>
+    .profile-container {
+    
+        background-color: #F3A90A;
+        margin: 0;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+    label{
+        font-size:20px;
+        color:#000;
+        font-weight:bold;
+    }
+    img{
+        width: 100px;
+        height: 100px;
+    }
+    button.btn.btn-primary:hover{
+        background: blue !important;
+    }      
+</style>
+
+<label for="msg" class="form-label"><h2>{{msg}}</h2></label>
+<div class="profile-container d-flex flex-column align-items-center justify-content-center">
+  
+    <form method="POST" action="{% url 'profile' %}">
+    {% csrf_token %}
+    <label for="msg" class="form-label">Profile Image :</label>
+    <input type="file" class="form-control" id="image" name="farmer_profile_pic">
+    
+    <div class="mb-3">
+      <label for="username" class="form-label">Username</label>
+      <input type="text" class="form-control" id="username" name="farmer_name" value="{{current_user.farmer_name}}" >
+    </div>
+    
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" class="form-control" id="email" name="email" value="{{current_user.farmer_email}}" readonly>
+    </div>
+    
+    <div class="mb-3">
+      <label for="phone" class="form-label">Phone Number</label>
+      <input type="tel" class="form-control" id="phone" name="farmer_phone" value="{{current_user.farmer_phone}}" >
+    </div>
+    
+    <div class="mb-3">
+      <label for="address" class="form-label">Address</label>
+      <input type="text" class="form-control" id="address" name="farmer_address" value="{{current_user.farmer_address}}" >
+    </div>
+    
+    <button type="submit" class="btn btn-primary" style="background: #000;">Update</button>
+  </form>
+</div>
+
+<!-- Bootstrap JS and Popper.js (required for Bootstrap) -->
+{% endblock %}
