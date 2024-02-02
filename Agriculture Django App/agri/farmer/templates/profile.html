@@ -28,13 +28,13 @@
     }      
 </style>
 
-<label for="msg" class="form-label"><h2>{{msg}}</h2></label>
 <div class="profile-container d-flex flex-column align-items-center justify-content-center">
   
-    <form method="POST" action="{% url 'profile' %}">
+  <form method="POST" action="{% url 'profile' %}" enctype="multipart/form-data">
+      <label for="msg" class="form-label"><h2>{{msg}}</h2></label><br/>
     {% csrf_token %}
     <label for="msg" class="form-label">Profile Image :</label>
-    <input type="file" class="form-control" id="image" name="farmer_profile_pic">
+    <input type="file" class="form-control" id="image" name="image" >
     
     <div class="mb-3">
       <label for="username" class="form-label">Username</label>

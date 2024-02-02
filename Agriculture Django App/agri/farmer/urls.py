@@ -1,4 +1,4 @@
-from django.urls import path,re_path
+from django.urls import path,include
 from. import views
 
 urlpatterns = [
@@ -9,6 +9,8 @@ urlpatterns = [
     path('addproduct/', views.addproduct, name='addproduct'),
     path('profile/', views.profile, name='profile'),
     path('otp/', views.otp, name='otp'),
+    path('challan/', views.challan, name='challan'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
+    path('admin/', include('admin_panel.urls')),  # this is for the admin panel
 ]

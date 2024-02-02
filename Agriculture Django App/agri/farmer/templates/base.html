@@ -80,7 +80,7 @@
                     </li>
                     {% if current_user %}
                     <li class="nav-item" >
-                      <a class="nav-link" href="{% url "logout" %}">{{current_user.farmer_name}}
+                      <a class="nav-link" href="{% url "profile" %}">{{current_user.farmer_name}}
                       <img style="height:35px;width:35px;border-radius:50% ;transform:translateY(-7px) ;" src="/media/{{current_user.farmer_profile_pic}}" /></a>
                     </li>
                     {% else %}

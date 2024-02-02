@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import Farmer,Product,Catogery,SubCatogery
 import random
+import os
 from django.core.mail import send_mail
 from django.conf import settings
 from django.http import HttpResponse
@@ -81,6 +82,23 @@ def logout(request):
 #________________________________________________________________________________
 
 
+def challan(request):
+    row_range=range(1,13)
+    col_range=range(1,7)
+
+
+    try:
+        total = 0
+        for i in row_range:
+            for j in col_range:
+                val =str(i)+str(j)
+                value=request.POST[val]
+                if value:
+                    total = total + int(value)
+        print(total)
+    except:
+        return render(request,'challan.html',context={'row_range':row_range,'col_range':col_range})
+    return render(request,'challan.html',context={'row_range':row_range,'col_range':col_range})
 
 
 
@@ -99,18 +117,23 @@ def addproduct(request):
     return render(request, 'addproduct.html')
 
 def profile(request):
-    current_user = Farmer.objects.get(farmer_email=request.session['farmer_email'])
-    if request.method == 'POST':
-        current_user.farmer_name = request.POST['farmer_name']
-        current_user.farmer_phone = request.POST['farmer_phone']
-        current_user.farmer_address = request.POST['farmer_address']
-        current_user.farmer_profile_pic = "profile_pics/"+request.POST['farmer_profile_pic']
-        current_user.save()
-        return render(request, 'profile.html',{'current_user':current_user,'msg':'Profile Updated Successfully'})
+    try:
+        current_user = Farmer.objects.get(farmer_email=request.session['farmer_email'])
+        if request.method == 'POST':
+            current_user.farmer_name = request.POST['farmer_name']
+            current_user.farmer_phone = request.POST['farmer_phone']
+            current_user.farmer_address = request.POST['farmer_address']  
+            try:
+                current_user.farmer_profile_pic = request.FILES['image']       
+            except:
+                pass
+            current_user.save()
+            return render(request, 'profile.html',{'current_user':current_user,'msg':"Updated Successfully"})
 
-    else:
-        return render(request, 'profile.html',{'current_user':current_user})
-
+        else:
+            return render(request, 'profile.html',{'current_user':current_user})
+    except:
+        return render(request, 'login.html')
 
 def about(request):
     return render(request, 'about.html')

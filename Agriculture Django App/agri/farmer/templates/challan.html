@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<form method="POST" id="challan">
+        {% csrf_token %}
+        {% for row in row_range %}
+        {% for col in col_range %}
+        <input type="text" name="{{row}}{{col}}" id="{{row}}{{col}}">
+        {% endfor %}
+        <br>
+        {% endfor %}
+
+        <input type="submit" value="Submit">
+    </form>
+
+
+    <script>
+    $(document).on('submit',"#challan",function(e) {
+        e.preventDefault();
+        $.ajax({
+            type:'POST',
+            url:'/create',
+            data:{
+                Value:$('{{row}}{{col}}').val(),
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()  
+            },
+            success: function(data){
+                $('challan').html(data)
+            }
+        })    
+    })
+    </script>
+{% endblock %}

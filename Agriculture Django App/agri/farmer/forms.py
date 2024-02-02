@@ -4,8 +4,7 @@ from .models import Farmer,Product,Catogery,SubCatogery
 class FarmerForm(forms.ModelForm):
     class Meta:
         model = Farmer
-        fields = ('farmer_name','farmer_email','farmer_phone','farmer_address','farmer_password')
-        exclude = ('farmer_profile_pic',)
+        fields = ('farmer_name','farmer_email','farmer_phone','farmer_address','farmer_password','farmer_profile_pic')
 
 class ProductForm(forms.ModelForm):
     class Meta:
